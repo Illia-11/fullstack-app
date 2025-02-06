@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function FunctionComponent(props) {
   const {
@@ -8,6 +8,34 @@ function FunctionComponent(props) {
   // const [state, setState] = useState({clicks: 0, isAutoincrementing: false});
 
   const [clicks, setClicks] = useState(0);
+  const [intervalId, setIntervalId] = useState(0);
+
+  useEffect(() => {
+    console.log("Запускається на першому і усіх наступних рендерах");
+
+    return () => {
+      console.log(
+        "Запускається при розмонтуванні та перед наступним ререндером"
+      );
+    };
+  });
+
+  useEffect(() => {
+    console.log(`clicks: ${clicks}`)
+  }, [clicks]);
+
+  useEffect(() => {
+    let id = setInterval(() => {
+      console.log("Fake click")
+      setClicks((clicks) => {
+        return clicks + 1 ;
+      });
+    }, 2000);
+
+    return () => {
+      clearInterval(id);
+    }
+  }, []);
 
   const handleClick = () => {
     // setClicks(clicks + 1);

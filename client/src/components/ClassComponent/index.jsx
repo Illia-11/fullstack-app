@@ -36,8 +36,35 @@ class ClassComponent extends Component {
 
   handleReset = () => {
     this.setState({
-      clicks: 0
-    })
+      clicks: 0,
+    });
+  };
+
+  componentDidMount() {
+    console.log("Запускається на першому рендурі");
+
+    this.intervalId = setInterval(() => {
+      console.log("Fake click")
+      this.setState((state) => {
+        return { clicks: state.clicks + 1 };
+      });
+    }, 2000);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Запускається на усіх наступних ререндерсах після першого");
+
+    if (Math.random() > 0.5) {
+      this.setState({
+        clicks: this.state.clicks + 1,
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("Запускається перед розмонтуванням компонента");
+
+    clearInterval(this.intervalId);
   }
 
   render() {
