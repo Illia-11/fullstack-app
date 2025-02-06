@@ -43,12 +43,12 @@ class ClassComponent extends Component {
   componentDidMount() {
     console.log("Запускається на першому рендурі");
 
-    this.intervalId = setInterval(() => {
-      console.log("Fake click")
-      this.setState((state) => {
-        return { clicks: state.clicks + 1 };
-      });
-    }, 2000);
+    // this.intervalId = setInterval(() => {
+    //   console.log("Fake click")
+    //   this.setState((state) => {
+    //     return { clicks: state.clicks + 1 };
+    //   });
+    // }, 2000);
   }
 
   componentDidUpdate(prevProps, prevState) {

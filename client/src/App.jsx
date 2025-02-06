@@ -18,7 +18,7 @@ function App() {
     <>
       <h1>Vite app</h1>
       <button onClick={toggleVisibility}>Toggle visibility</button>
-      {isVisible && (
+      {/* {isVisible && (
         <ClassComponent
           prop1="test prop 1"
           prop2
@@ -26,7 +26,7 @@ function App() {
           prop4={{ id: 0 }}
           task={task}
         />
-      )}
+      )} */}
       {isVisible && (
         <FunctionComponent
           prop1="test prop 1"
@@ -35,6 +35,18 @@ function App() {
           prop4={{ id: 0 }}
           task={task}
         />
+      )}
+
+      {isVisible ? (
+        <FunctionComponent
+          prop1="test prop 1"
+          prop2
+          prop3={4}
+          prop4={{ id: 0 }}
+          task={task}
+        />
+      ) : (
+        <div>No component shown.</div>
       )}
     </>
   );

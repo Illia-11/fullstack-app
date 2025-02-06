@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 function FunctionComponent(props) {
   const {
-    task: { title },
+    task: { title, isDone },
   } = props;
 
   // const [state, setState] = useState({clicks: 0, isAutoincrementing: false});
@@ -21,20 +21,19 @@ function FunctionComponent(props) {
   });
 
   useEffect(() => {
-    console.log(`clicks: ${clicks}`)
+    console.log(`clicks: ${clicks}`);
   }, [clicks]);
 
   useEffect(() => {
-    let id = setInterval(() => {
-      console.log("Fake click")
-      setClicks((clicks) => {
-        return clicks + 1 ;
-      });
-    }, 2000);
-
-    return () => {
-      clearInterval(id);
-    }
+    // let id = setInterval(() => {
+    //   console.log("Fake click")
+    //   setClicks((clicks) => {
+    //     return clicks + 1 ;
+    //   });
+    // }, 2000);
+    // return () => {
+    //   clearInterval(id);
+    // }
   }, []);
 
   const handleClick = () => {
@@ -53,12 +52,22 @@ function FunctionComponent(props) {
     setClicks(0);
   };
 
+  let par;
+
+  if (isDone) {
+    par = <p>Task status: Done</p>;
+  } else {
+    par = <p>Task status: Not Done</p>;
+  }
+
   return (
     <div>
       <h2>Function component</h2>
       <p>{title}</p>
+      {/* <p>Task status: { isDone ? "Done" : "Not Done" }</p> */}
+      {par}
       <p>Clicks: {clicks}</p>
-      <button onClick={handleClick}>Click me</button>
+      <button disabled={props.prop2} onClick={handleClick}>Click me</button>
       <button onClick={handleReset}>Reset clicks</button>
     </div>
   );
