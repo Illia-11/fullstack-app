@@ -1,4 +1,5 @@
 import { useState } from "react";
+import cx from "classnames";
 import ClassComponent from "./components/ClassComponent";
 import FunctionComponent from "./components/FunctionalComponent";
 import styles from "./App.module.css";
@@ -15,6 +16,10 @@ function App() {
     setIsVisible(!isVisible);
   };
 
+  const headingClasses = cx(styles.heading, {
+    [styles.headingItalics]: !isVisible,
+  });
+
   return (
     <>
       <h1
@@ -22,7 +27,7 @@ function App() {
         //   backgroundColor: "limegreen",
         //   fontStyle: isVisible ? "normal" : "italic",
         // }}
-        className={`${styles.heading} ${isVisible ? "" : styles.headingItalics}`}
+        className={headingClasses}
       >
         Vite app
       </h1>
