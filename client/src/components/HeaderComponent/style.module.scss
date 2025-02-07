@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+}
+
+.header {
+  background-color: blueviolet;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 40px;
+  gap: 50px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 4rem;
+  color: yellowgreen;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navLink {
+  text-decoration: none;
+  padding: 10px 15px;
+  background-color: green;
+  border-radius: 20px;
+  font-weight: bold;
+  color: yellow;
+  font-size: 1.5rem;
+}
