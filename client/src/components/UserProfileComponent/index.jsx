@@ -5,16 +5,30 @@ function UserProfile(props) {
     userData: { id, firstName, lastName, imgSrc, isMale, email, password },
   } = props;
 
+  const fullName = `${firstName} ${lastName}`;
+
   return (
-    <div className={styles.userContainer}>
-      <img src={imgSrc} alt="user image" className={styles.userImg} />
-      <h3 className={styles.userInfo}>
-        Full name: {`${firstName} ${lastName}`}
-      </h3>
-      <h3 className={styles.userInfo}>Id: {id}</h3>
-      <p className={styles.userInfo}>Gender: {isMale ? "Male" : "Female"}</p>
-      <p className={styles.userInfo}>Email: {email}</p>
-      <p className={styles.userInfo}>Password: {password}</p>
+    <div className={styles.container}>
+      <article className={styles.userContainer}>
+        <h2 className={styles.userInfo}>{fullName}</h2>
+        <img src={imgSrc} alt={fullName} className={styles.userImg} />
+        <ul>
+          <li>
+            <h3 className={styles.userInfo}>Id: {id}</h3>
+          </li>
+          <li>
+            <p className={styles.userInfo}>
+              Gender: {isMale ? "Male" : "Female"}
+            </p>
+          </li>
+          <li>
+            <p className={styles.userInfo}>Email: {email}</p>
+          </li>
+          <li>
+            <p className={styles.userInfo}>Password: {password}</p>
+          </li>
+        </ul>
+      </article>
     </div>
   );
 }

@@ -6,13 +6,13 @@ body {
   background-color: blueviolet;
   display: flex;
   flex-direction: column;
-  padding: 30px 40px;
-  gap: 50px;
+  padding: 20px 30px;
+  gap: 20px;
 }
 
 .heading {
   text-align: center;
-  font-size: 4rem;
+  font-size: 2rem;
   color: yellowgreen;
 }
 
@@ -29,5 +29,4 @@ body {
   border-radius: 20px;
   font-weight: bold;
   color: yellow;
-  font-size: 1.5rem;
 }
