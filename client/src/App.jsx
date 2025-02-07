@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<BasicLayout />}>
           <Route index element={<Home />} />

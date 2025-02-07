@@ -1,7 +1,11 @@
+import RegistrationForm from "../../components/RegistrationForm";
+import styles from "./RegistrationPage.module.scss";
+
 const RegistrationPage = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <h2>RegistrationPage</h2>
+      <RegistrationForm />
     </div>
   );
 };
