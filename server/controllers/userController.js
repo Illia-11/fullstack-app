@@ -1,49 +1,14 @@
-const { User } = require("../models");
+const createHttpError = require('http-errors');
+const { User } = require('../db/models');
 
 module.exports.createUser = async (req, res, next) => {
   try {
-    const { body: userData } = req;
+    const { body, file } = req;
 
-    const user = await User.create(userData);
-
-    res.status(201).send({ data: user });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.getUsers = async (req, res, next) => {
-  try {
-    const users = await User.find();
-
-    res.status(200).send({ data: users });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.getUser = async (req, res, next) => {
-  try {
-    const {
-      params: { userId },
-    } = req;
-
-    const user = await User.findById(userId);
-
-    res.status(200).send({ data: user });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.updateUser = async (req, res, next) => {
-  try {
-    const {
-      body,
-      params: { userId },
-    } = req;
-
-    const user = await User.findByIdAndUpdate(userId, body);
+    const user = await User.create({
+      ...body,
+      imgSrc: file ? file.filename : null,
+    });
 
     res.status(201).send({ data: user });
   } catch (error) {
@@ -53,13 +18,47 @@ module.exports.updateUser = async (req, res, next) => {
 
 module.exports.deleteUser = async (req, res, next) => {
   try {
-    const {
-      params: { userId },
-    } = req;
+    const { user } = req;
 
-    const user = await User.findByIdAndDelete(userId);
+    await user.destroy();
 
     res.status(200).send({ data: user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getUsers = async (req, res, next) => {
+  try {
+    const { pagination } = req;
+    const users = await User.findAll({
+      ...pagination,
+    });
+
+    res.status(200).send({ data: users });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getUser = async (req, res, next) => {
+  try {
+    const { user } = req;
+    res.status(200).send({ data: user });
+  } catch (error) {
+    next(error);
+  }
+};
+module.exports.updateUser = async (req, res, next) => {
+  try {
+    const { user, validatedBody } = req;
+
+    const updatedUser = await user.update({
+      ...validatedBody,
+      imgSrc: req.file ? req.file.filename : user.imgSrc,
+    });
+
+    res.status(200).send({ data: updatedUser });
   } catch (error) {
     next(error);
   }

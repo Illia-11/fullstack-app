@@ -1,7 +1,0 @@
-PUT http://localhost:3000/users/67aa0223ef0e1a1efea93caf
-Content-Type: application/json
-
-{
-  "firstName": "Alexey",
-  "lastName": "Petrov"
-}

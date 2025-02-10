@@ -1,14 +1,22 @@
 const express = require("express");
-const serverConfig = require("./config/server.json");
 const rootRouter = require("./routers");
+const { basicErrorMW } = require("./middlewares/errors/basicErrorMW");
+const { PUBLIC_FOLDER_PATH } = require("./constants");
+const serverConfig = require("./configs/server.json");
+
 const app = express();
 
+app.use(express.static(PUBLIC_FOLDER_PATH));
+
 app.use(express.json());
+
 app.use(rootRouter);
 
-const PORT = process.env.PORT || serverConfig.PORT;
-const HOST = process.env.HOST || serverConfig.HOST;
+app.use(basicErrorMW);
+
+const PORT = serverConfig.PORT;
+const HOST = serverConfig.HOST;
 
 app.listen(PORT, HOST, () => {
-  console.log(`Server started in PORT ${HOST}: ${PORT}`);
+  console.log(`Server started on port ${HOST}:  ${PORT}`);
 });
