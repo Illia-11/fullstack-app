@@ -1,28 +1,34 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import cx from 'classnames';
-import { USER_REGISTRATION_SCHEMA } from '../../validation/userValidation';
-import styles from './RegistrationForm.module.scss';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import cx from "classnames";
+import { USER_REGISTRATION_SCHEMA } from "../../validation/userValidation";
+import styles from "./RegistrationForm.module.scss";
+import { useContext } from "react";
+import { UserContext } from "../../contexts";
+import { registerUser } from "../../api";
 
 const initialValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  passwordRepeat: '',
-  gender: '',
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  passwordRepeat: "",
+  gender: "",
   // imgSrc: '',
 };
 
 const RegistrationForm = () => {
-  const handleSubmit = (values, formikBag) => {
+  const [, setUser] = useContext(UserContext);
+  const handleSubmit = async (values, formikBag) => {
     const { gender, ...restOfUserData } = values;
 
     const newUserData = {
       ...restOfUserData,
-      isMale: gender === 'male',
+      isMale: gender === "male",
     };
 
-    console.log(newUserData);
+    const registeredUser = await registerUser(newUserData);
+
+    setUser(registeredUser);
 
     formikBag.resetForm();
   };
@@ -35,72 +41,72 @@ const RegistrationForm = () => {
     >
       <Form className={styles.form}>
         <div className={styles.inputContainer}>
-          <label htmlFor='firstName' className={styles.label}>
+          <label htmlFor="firstName" className={styles.label}>
             First name:
           </label>
           <Field
-            name='firstName'
-            type='text'
-            id='firstName'
-            placeholder='First name'
+            name="firstName"
+            type="text"
+            id="firstName"
+            placeholder="First name"
             className={styles.input}
           />
         </div>
-        <ErrorMessage name='firstName' component='p' className={styles.error} />
+        <ErrorMessage name="firstName" component="p" className={styles.error} />
         <div className={styles.inputContainer}>
-          <label htmlFor='lastName' className={styles.label}>
+          <label htmlFor="lastName" className={styles.label}>
             Last name:
           </label>
           <Field
-            name='lastName'
-            type='text'
-            id='lastName'
-            placeholder='Last name'
+            name="lastName"
+            type="text"
+            id="lastName"
+            placeholder="Last name"
             className={styles.input}
           />
         </div>
-        <ErrorMessage name='lastName' component='p' className={styles.error} />
+        <ErrorMessage name="lastName" component="p" className={styles.error} />
         <div className={styles.inputContainer}>
-          <label htmlFor='email' className={styles.label}>
+          <label htmlFor="email" className={styles.label}>
             Email:
           </label>
           <Field
-            name='email'
-            type='email'
-            id='email'
-            placeholder='Email'
+            name="email"
+            type="email"
+            id="email"
+            placeholder="Email"
             className={styles.input}
           />
         </div>
-        <ErrorMessage name='email' component='p' className={styles.error} />
+        <ErrorMessage name="email" component="p" className={styles.error} />
         <div className={styles.inputContainer}>
-          <label htmlFor='password' className={styles.label}>
+          <label htmlFor="password" className={styles.label}>
             Password:
           </label>
           <Field
-            name='password'
-            type='password'
-            id='password'
-            placeholder='Password'
+            name="password"
+            type="password"
+            id="password"
+            placeholder="Password"
             className={styles.input}
           />
         </div>
-        <ErrorMessage name='password' component='p' className={styles.error} />
+        <ErrorMessage name="password" component="p" className={styles.error} />
         <div className={styles.inputContainer}>
-          <label htmlFor='passwordRepeat' className={styles.label}>
+          <label htmlFor="passwordRepeat" className={styles.label}>
             Repeat password:
           </label>
           <Field
-            name='passwordRepeat'
-            type='password'
-            id='passwordRepeat'
-            placeholder='Repeat password'
+            name="passwordRepeat"
+            type="password"
+            id="passwordRepeat"
+            placeholder="Repeat password"
             className={styles.input}
           />
         </div>
         <ErrorMessage
-          name='passwordRepeat'
-          component='p'
+          name="passwordRepeat"
+          component="p"
           className={styles.error}
         />
 
@@ -108,14 +114,14 @@ const RegistrationForm = () => {
           <legend>Gender</legend>
           <div>
             <Field
-              type='radio'
-              id='male'
-              name='gender'
-              value='male'
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
               className={cx(styles.label, styles.radioLabel)}
             />
             <label
-              htmlFor='male'
+              htmlFor="male"
               className={cx(styles.label, styles.radioLabel)}
             >
               Male
@@ -124,27 +130,27 @@ const RegistrationForm = () => {
 
           <div>
             <Field
-              type='radio'
-              id='female'
-              name='gender'
-              value='female'
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
               className={cx(styles.label, styles.radioLabel)}
             />
             <label
-              htmlFor='female'
+              htmlFor="female"
               className={cx(styles.label, styles.radioLabel)}
             >
               Female
             </label>
           </div>
-          <ErrorMessage name='gender' component='p' className={styles.error} />
+          <ErrorMessage name="gender" component="p" className={styles.error} />
         </fieldset>
 
         <div className={styles.btnContainer}>
-          <button type='submit' className={styles.btn}>
+          <button type="submit" className={styles.btn}>
             Register
           </button>
-          <button type='reset' className={styles.btn}>
+          <button type="reset" className={styles.btn}>
             Reset fields
           </button>
         </div>
