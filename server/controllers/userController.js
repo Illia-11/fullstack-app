@@ -43,7 +43,7 @@ module.exports.updateUser = async (req, res, next) => {
       params: { userId },
     } = req;
 
-    const user = await User.findByIdAndUpdate({ id: userId }, body);
+    const user = await User.findByIdAndUpdate(userId, body);
 
     res.status(201).send({ data: user });
   } catch (error) {
