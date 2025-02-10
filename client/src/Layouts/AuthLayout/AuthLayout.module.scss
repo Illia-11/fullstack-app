@@ -1,0 +1,7 @@
+@use '../../styles/template';
+.container {
+  @extend %pageWrapper;
+}
+.main {
+  @extend %mainWrapper;
+}
