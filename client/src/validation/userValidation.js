@@ -1,17 +1,34 @@
 import * as yup from "yup";
 
+const USER_EMAIL_SCHEMA = yup.string().email();
+
+const USER_PASSWORD_SCHEMA = yup
+  .string()
+  .matches(
+    /^[a-zA-Z0-9]{8,32}$/,
+    "Password must contain letter or numbers and be 8 - 32 symbols long."
+  );
+
+const USER_PASSWORD_REPEAT_SCHEMA = yup
+  .string()
+  .oneOf([null, yup.ref("password")]);
+
 const USER_REGISTRATION_SCHEMA = yup.object({
   firstName: yup.string().required().min(2),
   lastName: yup.string().required().min(2),
-  email: yup.string().email().required(),
-  password: yup
-    .string()
-    .matches(
-      /^[a-zA-Z0-9]{8,32}$/,
-      "Password must contain letter or numbers and be 8 - 32 symbols long."
-    ),
-  passwordRepeat: "",
+  email: USER_EMAIL_SCHEMA.required(),
+  password: USER_PASSWORD_SCHEMA.required(),
+  passwordRepeat: USER_PASSWORD_REPEAT_SCHEMA.required(),
   gender: yup.string().required(),
 });
 
-export { USER_REGISTRATION_SCHEMA };
+const USER_UPDATE_SCHEMA = yup.object({
+  firstName: yup.string().min(2),
+  lastName: yup.string().min(2),
+  email: USER_EMAIL_SCHEMA,
+  password: USER_PASSWORD_SCHEMA,
+  passwordRepeat: USER_PASSWORD_REPEAT_SCHEMA,
+  gender: yup.string(),
+});
+
+export { USER_REGISTRATION_SCHEMA, USER_UPDATE_SCHEMA };
