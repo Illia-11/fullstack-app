@@ -1,14 +1,16 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { USER_REGISTRATION_SCHEMA } from "../../validation/userValidation";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import cx from 'classnames';
+import { USER_REGISTRATION_SCHEMA } from '../../validation/userValidation';
+import styles from './RegistrationForm.module.scss';
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  passwordRepeat: "",
-  gender: "",
-  // imageSrc: "",
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  passwordRepeat: '',
+  gender: '',
+  // imgSrc: '',
 };
 
 const RegistrationForm = () => {
@@ -17,7 +19,7 @@ const RegistrationForm = () => {
 
     const newUserData = {
       ...restOfUserData,
-      isMale: gender === "male",
+      isMale: gender === 'male',
     };
 
     console.log(newUserData);
@@ -31,64 +33,120 @@ const RegistrationForm = () => {
       onSubmit={handleSubmit}
       validationSchema={USER_REGISTRATION_SCHEMA}
     >
-      <Form>
-        <div>
+      <Form className={styles.form}>
+        <div className={styles.inputContainer}>
+          <label htmlFor='firstName' className={styles.label}>
+            First name:
+          </label>
           <Field
-            name="firstName"
-            type="text"
-            id="firstName"
-            placeholder="First name"
-          />
-          <ErrorMessage name="firstName" />
-        </div>
-        <div>
-          <Field
-            name="lastName"
-            type="text"
-            id="lastName"
-            placeholder="Last name"
-          />
-          <ErrorMessage name="lastName" />
-        </div>
-        <div>
-          <Field name="email" type="email" id="email" placeholder="Email" />
-          <ErrorMessage name="email" />
-        </div>
-        <div>
-          <Field
-            name="password"
-            type="password"
-            id="password"
-            placeholder="Password"
-          />
-          <ErrorMessage name="password" />
-        </div>
-        <div>
-          <Field
-            name="passwordRepeat"
-            type="password"
-            id="passwordRepeat"
-            placeholder="Repeat password"
+            name='firstName'
+            type='text'
+            id='firstName'
+            placeholder='First name'
+            className={styles.input}
           />
         </div>
+        <ErrorMessage name='firstName' component='p' className={styles.error} />
+        <div className={styles.inputContainer}>
+          <label htmlFor='lastName' className={styles.label}>
+            Last name:
+          </label>
+          <Field
+            name='lastName'
+            type='text'
+            id='lastName'
+            placeholder='Last name'
+            className={styles.input}
+          />
+        </div>
+        <ErrorMessage name='lastName' component='p' className={styles.error} />
+        <div className={styles.inputContainer}>
+          <label htmlFor='email' className={styles.label}>
+            Email:
+          </label>
+          <Field
+            name='email'
+            type='email'
+            id='email'
+            placeholder='Email'
+            className={styles.input}
+          />
+        </div>
+        <ErrorMessage name='email' component='p' className={styles.error} />
+        <div className={styles.inputContainer}>
+          <label htmlFor='password' className={styles.label}>
+            Password:
+          </label>
+          <Field
+            name='password'
+            type='password'
+            id='password'
+            placeholder='Password'
+            className={styles.input}
+          />
+        </div>
+        <ErrorMessage name='password' component='p' className={styles.error} />
+        <div className={styles.inputContainer}>
+          <label htmlFor='passwordRepeat' className={styles.label}>
+            Repeat password:
+          </label>
+          <Field
+            name='passwordRepeat'
+            type='password'
+            id='passwordRepeat'
+            placeholder='Repeat password'
+            className={styles.input}
+          />
+        </div>
+        <ErrorMessage
+          name='passwordRepeat'
+          component='p'
+          className={styles.error}
+        />
 
         <fieldset>
           <legend>Gender</legend>
           <div>
-            <Field type="radio" id="male" name="gender" value="male" />
-            <label htmlFor="male">Male</label>
+            <Field
+              type='radio'
+              id='male'
+              name='gender'
+              value='male'
+              className={cx(styles.label, styles.radioLabel)}
+            />
+            <label
+              htmlFor='male'
+              className={cx(styles.label, styles.radioLabel)}
+            >
+              Male
+            </label>
           </div>
 
           <div>
-            <Field type="radio" id="female" name="gender" value="female" />
-            <label htmlFor="female">Female</label>
-            <ErrorMessage name="gender" />
+            <Field
+              type='radio'
+              id='female'
+              name='gender'
+              value='female'
+              className={cx(styles.label, styles.radioLabel)}
+            />
+            <label
+              htmlFor='female'
+              className={cx(styles.label, styles.radioLabel)}
+            >
+              Female
+            </label>
           </div>
+          <ErrorMessage name='gender' component='p' className={styles.error} />
         </fieldset>
 
-        <div>
-          <button type="submit">Register</button>
-          <button type="reset">Reset fields</button>
+        <div className={styles.btnContainer}>
+          <button type='submit' className={styles.btn}>
+            Register
+          </button>
+          <button type='reset' className={styles.btn}>
+            Reset fields
+          </button>
         </div>
       </Form>
     </Formik>

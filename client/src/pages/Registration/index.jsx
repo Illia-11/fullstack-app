@@ -4,7 +4,7 @@ import styles from "./RegistrationPage.module.scss";
 const RegistrationPage = () => {
   return (
     <div className={styles.container}>
-      <h2>RegistrationPage</h2>
+      <h2 className={styles.heading}>RegistrationPage</h2>
       <RegistrationForm />
     </div>
   );
