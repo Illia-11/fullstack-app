@@ -1,7 +1,12 @@
-import PropTypes from 'prop-types';
-import styles from './UserProfile.module.scss';
+import PropTypes from "prop-types";
+import styles from "./UserProfile.module.scss";
+import { UserContext } from "../../contexts";
+import { useContext } from "react";
 
-function UserProfile({ user }) {
+function UserProfile() {
+  
+  const [user] = useContext(UserContext);
+
   const { firstName, lastName, imgSrc, isMale, email } = user;
   return (
     <article className={styles.userProfile}>
@@ -13,11 +18,12 @@ function UserProfile({ user }) {
       <h2 className={styles.userName}>
         {firstName} {lastName}
       </h2>
-      <p className={styles.userGender}>Gender: {isMale ? 'male' : 'female'}</p>
+      <p className={styles.userGender}>Gender: {isMale ? "male" : "female"}</p>
       <p className={styles.userEmail}>Email: {email}</p>
     </article>
   );
 }
+
 UserProfile.propTypes = {
   user: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
@@ -25,7 +31,7 @@ UserProfile.propTypes = {
     imgSrc: PropTypes.string,
     isMale: PropTypes.bool,
     email: PropTypes.string.isRequired,
-    password: PropTypes.string
-  })
+    password: PropTypes.string,
+  }),
 };
 export default UserProfile;
