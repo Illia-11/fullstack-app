@@ -1,14 +1,16 @@
 import { NavLink } from 'react-router';
 import styles from './Navigation.module.scss';
+
 const setActive = ({ isActive }) =>
   isActive ? styles.activeLink : styles.link;
+
 function Navigation() {
   return (
     <nav>
       <ul className={styles.navigation}>
         <li className={styles.navigationItem}>
           <NavLink to="/" className={setActive}>
-            Profile
+            Home
           </NavLink>
         </li>
         <li className={styles.navigationItem}>
@@ -17,17 +19,18 @@ function Navigation() {
           </NavLink>
         </li>
         <li className={styles.navigationItem}>
-          <NavLink to="/services" className={setActive}>
-            Services
+          <NavLink to="/profile" className={setActive}>
+            Profile
           </NavLink>
         </li>
         <li className={styles.navigationItem}>
-          <NavLink to="/contact" className={setActive}>
-            Contacts
+          <NavLink to="/users" className={setActive}>
+            Users
           </NavLink>
         </li>
       </ul>
     </nav>
   );
 }
+
 export default Navigation;

@@ -1,11 +1,17 @@
-import Navigation from '../Navigation';
-import s from './Header.module.scss';
+import Navigation from "../Navigation";
+import AuthNav from "../AuthNav";
+import s from "./Header.module.scss";
 
-function Header ()  {
-  return <header className={s.header}>
-  <h1 className={s.heading}>Heading</h1>
-  <Navigation/>
-</header>
+function Header() {
+  return (
+    <header className={s.header}>
+      <h1 className={s.heading}>Heading</h1>
+      <div className={s.navContainer}>
+        <Navigation />
+        <AuthNav />
+      </div>
+    </header>
+  );
 }
 
 export default Header;
