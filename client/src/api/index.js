@@ -22,6 +22,10 @@ export async function login(userData) {
   return user;
 }
 
+export const logout = () => {
+  window.localStorage.removeItem("refresh");
+}
+
 export async function refreshSession(userId) {
   const {
     data: { data: user },
