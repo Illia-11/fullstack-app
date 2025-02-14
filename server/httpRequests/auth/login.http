@@ -2,6 +2,6 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "axiosseq@gmail.com",
-  "password": "123456789"
+  "email": "user5@example4279.com",
+  "password": "supersecurepassword123"
 }

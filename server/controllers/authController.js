@@ -1,12 +1,7 @@
 const createHttpError = require("http-errors");
-const { User, RefreshToken } = require("../db/models");
+const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
 const AuthService = require("../services/auth.service");
-const jwt = require("jsonwebtoken");
-const { promisify } = require("node:util");
-const { verify } = require('jsonwebtoken');
-
-const jwtVerify = promisify(jwt.verify);
 
 module.exports.registration = async (req, res, next) => {
   try {
@@ -62,28 +57,10 @@ module.exports.login = async (req, res, next) => {
 // оновлення сессії по якимось даним з фронта
 module.exports.refreshSession = async (req, res, next) => {
   try {
-    // якщо надіслали ПОСТ запит з токеном то треба оновити сесію
-    const {
-      body: { refreshToken },
-    } = req;
-
-    // 1. перевірити валідність токена
-    const { id } = await jwtVerify(
-      refreshToken,
-      "nvjfeqo4by3fkqbfhjkb4hgjkb34hkbghe8dj"
-    );
-
-    // 2. Перевірити наявність токену у БД
-    const foundToken = await RefreshToken.findOne({
-      where: { token: refreshToken, userId: id },
-    });
-
-    if (!foundToken) {
-      throw new createHttpError(404, "Token not found");
-    }
+    const { tokenInstance } = req;
 
     // генеруємо новук сессію для користувача
-    const sessionData = await AuthService.refreshSession(foundToken);
+    const sessionData = await AuthService.refreshSession(tokenInstance);
 
     res.status(200).send({ data: sessionData });
   } catch (error) {

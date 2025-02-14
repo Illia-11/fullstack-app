@@ -7,7 +7,11 @@ const jwtVerify = promisify(jwt.verify);
 const tokenConfig = {
   access: {
     secret: "nvjfeqo4by3fkqbfhjkb4hgjkb34hkbghe8dj",
-    expiresIn: "7d",
+    expiresIn: "30s",
+  },
+  refresh: {
+    secret: "j35infjgn5jkgn53jn5jgku68onrnvjfdiosvn0divjfieowee7j",
+    expiresIn: "14d",
   },
 };
 
@@ -33,8 +37,14 @@ const createToken = (payload, { secret, expiresIn }) =>
  */
 const verifyToken = (token, { secret }) => jwtVerify(token, secret);
 
-// Access token - токен доступу, використовується для авторизації власника
+// Access token - токен доступу, використовується для авторизації власника, багаторазовий
 module.exports.createAccessToken = (payload) =>
   createToken(payload, tokenConfig.access);
 module.exports.verifyAccessToken = (token) =>
   verifyToken(token, tokenConfig.access);
+
+// Refresh token - токен оновлення, використовується для оновлення токена доступу, одноразовий
+module.exports.createRefreshToken = (payload) =>
+  createToken(payload, tokenConfig.refresh);
+module.exports.verifyRefreshToken = (token) =>
+  verifyToken(token, tokenConfig.refresh);

@@ -1,31 +1,33 @@
-const userRouter = require('express').Router();
-const UserController = require('../controllers/userController');
+const userRouter = require("express").Router();
+const UserController = require("../controllers/userController");
 const {
   findUserById,
   createUserValidationMW,
   updateUserValidationMW,
-} = require('../middlewares/usersMW');
-const { imagesUpload } = require('../utils/multer');
-const paginate = require('../middlewares/paginate');
+} = require("../middlewares/usersMW");
+const { imagesUpload } = require("../utils/multer");
+const paginate = require("../middlewares/paginate");
+const { checkAccessToken } = require("../middlewares/tokenMW");
 
 userRouter.post(
-  '/',
-  imagesUpload.single('imgSrc'),
+  "/",
+  checkAccessToken,
+  imagesUpload.single("imgSrc"),
   createUserValidationMW,
   UserController.createUser
 );
-userRouter.get('/', paginate, UserController.getUsers);
+userRouter.get("/", paginate, UserController.getUsers);
 
-userRouter.get('/:userId', findUserById, UserController.getUser);
+userRouter.get("/:userId", findUserById, UserController.getUser);
 
 userRouter.put(
-  '/:userId',
-  imagesUpload.single('imgSrc'),
+  "/:userId",
+  imagesUpload.single("imgSrc"),
   updateUserValidationMW,
   findUserById,
   UserController.updateUser
 );
 
-userRouter.delete('/:userId', findUserById, UserController.deleteUser);
+userRouter.delete("/:userId", findUserById, UserController.deleteUser);
 
 module.exports = userRouter;

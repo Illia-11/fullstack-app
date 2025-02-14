@@ -5,7 +5,7 @@ Content-Type: application/json
   "firstName": "User",
   "lastName": "Userenko",
   "isMale": true,
-  "email": "user3@example4279.com",
+  "email": "user5@example4279.com",
   "password": "supersecurepassword123",
   "passwordRepeat": "supersecurepassword123"
 }

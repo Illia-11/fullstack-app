@@ -2,6 +2,7 @@ const authRouter = require("express").Router();
 const AuthController = require("../controllers/authController");
 const { imagesUpload } = require("../utils/multer");
 const { loginMW, registrationMW } = require("../middlewares/authMW");
+const { checkRefreshToken } = require("../middlewares/tokenMW");
 
 authRouter.post(
   "/registration",
@@ -12,7 +13,7 @@ authRouter.post(
 
 authRouter.post("/login", loginMW, AuthController.login);
 
-authRouter.post("/refresh", AuthController.refreshSession);
+authRouter.post("/refresh", checkRefreshToken, AuthController.refreshSession);
 
 
 module.exports = authRouter;
