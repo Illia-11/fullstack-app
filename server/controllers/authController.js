@@ -1,11 +1,12 @@
 const createHttpError = require("http-errors");
 const { User, RefreshToken } = require("../db/models");
-const { promisify } = require("node:util");
-const { sign, verify } = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const AuthService = require("../services/auth.service");
+const jwt = require("jsonwebtoken");
+const { promisify } = require("node:util");
+const { verify } = require('jsonwebtoken');
 
-const JwtSign = promisify(sign);
-const jwtVerify = promisify(verify);
+const jwtVerify = promisify(jwt.verify);
 
 module.exports.registration = async (req, res, next) => {
   try {
@@ -17,23 +18,9 @@ module.exports.registration = async (req, res, next) => {
     });
 
     // генеруємо JWT для можливого рефрешу або для маршрутів що потребують авторизації
-    const token = await JwtSign(
-      {
-        id: user.id,
-      },
-      "nvjfeqo4by3fkqbfhjkb4hgjkb34hkbghe8dj",
-      {
-        expiresIn: "7d",
-      }
-    );
+    const sessionData = await AuthService.createSession(user);
 
-    await RefreshToken.create({ userId: user.id, token });
-
-    const preparedUser = user.toJSON();
-
-    delete preparedUser.password;
-
-    res.status(201).send({ data: { preparedUser, token } });
+    res.status(201).send({ data: { sessionData } });
   } catch (error) {
     next(error);
   }
@@ -64,23 +51,9 @@ module.exports.login = async (req, res, next) => {
     }
 
     // 3. надсилаємо дані про користувача (без паролю)
-    const preparedUser = user.toJSON();
+    const sessionData = await AuthService.createSession(user);
 
-    delete preparedUser.password;
-
-    const token = await JwtSign(
-      {
-        id: user.id,
-      },
-      "nvjfeqo4by3fkqbfhjkb4hgjkb34hkbghe8dj",
-      {
-        expiresIn: "7d",
-      }
-    );
-
-    await RefreshToken.create({ userId: user.id, token });
-
-    res.status(201).send({ data: { user: preparedUser, token } });
+    res.status(201).send({ data: { sessionData } });
   } catch (error) {
     next(error);
   }
@@ -109,33 +82,10 @@ module.exports.refreshSession = async (req, res, next) => {
       throw new createHttpError(404, "Token not found");
     }
 
-    // 3. шукаємо користувача
-    const user = await User.findByPk(id);
+    // генеруємо новук сессію для користувача
+    const sessionData = await AuthService.refreshSession(foundToken);
 
-    // 4. кидаємо помилко якщо такого не існує
-    if (!user) {
-      throw new createHttpError(404, "User not found");
-    }
-
-    // 5. амулюємо старий токен перезаписуючи його у БД новим
-    const token = await JwtSign(
-      {
-        id: user.id,
-      },
-      "nvjfeqo4by3fkqbfhjkb4hgjkb34hkbghe8dj",
-      {
-        expiresIn: "7d",
-      }
-    );
-
-    await foundToken.update({ token });
-
-    // 3. надсилаємо дані про користувача (без паролю)
-    const preparedUser = user.toJSON();
-
-    delete preparedUser.password;
-
-    res.status(200).send({ data: { user: preparedUser, token } });
+    res.status(200).send({ data: sessionData });
   } catch (error) {
     next(error);
   }
