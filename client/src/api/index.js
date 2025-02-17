@@ -1,8 +1,9 @@
 import axios from "axios";
+import CONSTANTS from "../constants";
 import { checkToken } from "../utils/tokenUtils";
 
 const httpClient = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: CONSTANTS.SERVER_URL,
 });
 
 let accessTokenInMemory = null;
@@ -13,12 +14,12 @@ function setTokens(tokenPair) {
   // зберігаємо наші токени
   accessTokenInMemory = accessToken;
   // console.log(`Access token: ${accessTokenInMemory}`);
-  window.localStorage.setItem("refreshToken", refreshToken);
+  window.localStorage.setItem(CONSTANTS.REFRESH_TOKEN_KEY, refreshToken);
 }
 
 function clearTokens() {
   accessTokenInMemory = null;
-  localStorage.removeItem("refreshToken");
+  localStorage.removeItem(CONSTANTS.REFRESH_TOKEN_KEY);
 }
 
 // додавання перехоплювачів на запит
@@ -48,7 +49,7 @@ httpClient.interceptors.request.use(
         data: {
           data: { tokenPair },
         },
-      } = await axios.post("http://localhost:3000/auth/refresh", {
+      } = await axios.post(`${CONSTANTS.SERVER_URL}/auth/refresh`, {
         refreshToken: refreshTokenFromLS,
       });
 
