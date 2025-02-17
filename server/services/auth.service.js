@@ -1,8 +1,7 @@
-const createHttpError = require("http-errors");
-const { RefreshToken, User } = require("../db/models");
-const { prepareUser } = require("../utils/user");
-const JwtService = require("./token.service");
-const { update } = require("lodash");
+const createHttpError = require('http-errors');
+const { RefreshToken } = require('../db/models');
+const { prepareUser } = require('../utils/user');
+const JwtService = require('./token.service');
 
 module.exports.createSession = async (user) => {
   // 1. генеруємо токени для нової сессії
@@ -17,10 +16,10 @@ module.exports.createSession = async (user) => {
   // 2. зберігаємо його у БД
   await RefreshToken.create({ token: refreshToken, userId: user.id });
 
-  // 3. підготовуємо дані користувача до відпраки на фронт (прибираємо пароль)
+  // 3. підготовуємо ані користувача до відправки на фронт (прибираємо пароль)
   const preparedUser = prepareUser(user);
 
-  // 4. повертаємо дані сессії як результат
+  // 4. повертаємо дані сесії як результат
   return { user: preparedUser, tokenPair: { accessToken, refreshToken } };
 };
 
@@ -28,9 +27,9 @@ module.exports.refreshSession = async (tokenInstance) => {
   // 1. по даним з екземпляра токена знайти юзера
   const user = await tokenInstance.getUser();
 
-  // 2. якщо немає кидаємо помилку
+  // 2. якщо немає кидажмо помилку
   if (!user) {
-    throw createHttpError(404, "User with this data not found");
+    throw new createHttpError(404, 'User not found.');
   }
 
   // 3. створити новий токени для юзера
@@ -43,11 +42,11 @@ module.exports.refreshSession = async (tokenInstance) => {
   });
 
   // 4. замінити старий токен новим у БД
-  await tokenInstance.update({ token: refreshToken });
+  await tokenInstance.update({ token : refreshToken });
 
-  // 5. підготовуємо дані користувача до відпраки на фронт (прибираємо пароль)
+  // 5. підготовуємо ані користувача до відправки на фронт (прибираємо пароль)
   const preparedUser = prepareUser(user);
 
-  // 6. повертаємо дані сессії як результат
+  // 6. повертаємо дані сесії як результат
   return { user: preparedUser, tokenPair: { accessToken, refreshToken } };
 };
