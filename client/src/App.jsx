@@ -12,6 +12,7 @@ import UserProfilePage from "./pages/UserProfile";
 import { refreshSession } from "./api";
 import CONSTANTS from "./constants";
 import PrivateRoute from "./components/Routes/PrivateRoute";
+import CounterPage from "./pages/Counter";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" element={<BasicLayout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/counter" element={<CounterPage />} />
 
           {/* <Route element={<PrivateRoute roles={["admin"]}/>}> */}
           <Route element={<PrivateRoute />}>
@@ -39,6 +41,7 @@ function App() {
             <Route path="/users" element={<UsersPage />} />
           </Route>
         </Route>
+        
 
         <Route path="/auth" element={<AuthLayout />}>
           {/* /auth/login */}
