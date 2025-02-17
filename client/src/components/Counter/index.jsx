@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import ACTION_TYPES from "./actionTypes";
+import { increment, setStep } from "./actionCreators";
 
 /*
   reducer - чиста функція яка використовується реактом для визначення нового стану
@@ -51,21 +52,14 @@ const Counter = (props) => {
   const handleAddStep = () => {
     // setState(state.count + state.step);
 
-    const action = {
-      type: ACTION_TYPES.INCREMENT,
-    };
+    const action = increment();
 
     // dispatch хоче прийняти екшн - обʼєкт у якому буде достатньо інформації для редюсера щоб зрозуміти як оновити стан
     dispatch(action);
   };
 
   const handleChangeStep = ({ target: { value } }) => {
-    const action = {
-      type: ACTION_TYPES.SET_STEP,
-      payload: value,
-    };
-
-    dispatch(action);
+    dispatch(setStep(value));
   };
 
   return (
