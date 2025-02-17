@@ -16,7 +16,7 @@ userRouter.post(
   createUserValidationMW,
   UserController.createUser
 );
-userRouter.get("/", paginate, UserController.getUsers);
+userRouter.get("/", checkAccessToken, paginate, UserController.getUsers);
 
 userRouter.get("/:userId", findUserById, UserController.getUser);
 
