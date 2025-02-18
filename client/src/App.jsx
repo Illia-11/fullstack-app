@@ -13,6 +13,7 @@ import { refreshSession } from "./api";
 import CONSTANTS from "./constants";
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import CounterPage from "./pages/Counter";
+import PublicOnlyRoute from "./components/Routes/PublicOnlyRoute";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -41,13 +42,14 @@ function App() {
             <Route path="/users" element={<UsersPage />} />
           </Route>
         </Route>
-        
 
         <Route path="/auth" element={<AuthLayout />}>
-          {/* /auth/login */}
-          <Route path="login" element={<LoginPage />} />
-          {/* /auth/register */}
-          <Route path="registration" element={<RegistrationPage />} />
+          <Route element={<PublicOnlyRoute />}>
+            {/* /auth/login */}
+            <Route path="login" element={<LoginPage />} />
+            {/* /auth/register */}
+            <Route path="registration" element={<RegistrationPage />} />
+          </Route>
         </Route>
       </Routes>
     </UserContext.Provider>
