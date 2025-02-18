@@ -1,29 +1,23 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+import {
+  increment,
+  decrement,
+  setStep,
+} from '../../store/actions/actionCreators';
 
 const ReduxCounter = (props) => {
   const { count, step, dispatch } = props;
+
   const handleAddStep = () => {
-    const incrementAction = {
-      type: "increment",
-    };
+    const incrementAction = increment();
 
     dispatch(incrementAction);
   };
-
   const handleSubtractStep = () => {
-    const substractionAction = {
-      type: "subtraction",
-    };
-
-    dispatch(substractionAction);
+    dispatch(decrement());
   };
 
   const handleChangeStep = ({ target: { value } }) => {
-    const setStep = (payload) => ({
-      type: "setStep",
-      payload,
-    });
-
     dispatch(setStep(value));
   };
 
@@ -31,27 +25,27 @@ const ReduxCounter = (props) => {
     <div>
       <p>Count: {count}</p>
       <button onClick={handleAddStep}>Add step</button>
-      <button onClick={handleSubtractStep}>Substract step</button>
+      <button onClick={handleSubtractStep}>Subtract step</button>
       <label>
-        Step:{" "}
+        Step:{' '}
         <select value={step} onChange={handleChangeStep}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="5">5</option>
-          <option value="10">10</option>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='5'>5</option>
+          <option value='10'>10</option>
         </select>
       </label>
     </div>
   );
 };
 
-// функція яка пояснює яку частинку редаксівського стану підʼєднуємо до компонента
+// функція яка пояснює яку частинку редаксівського стану під'єднуємо до компонента
 const mapStateToProps = (state) => {
-  // обʼєкт який повертається буде додано до пропсів компонента
+  // об'єкт який повертається буде додано до пропсів компонента
   return state;
 };
 
-// withProps - Компонент вищого порядку, який дозволить підʼєднати редакс до компонента
+// withProps - Компонент вищого порядку, який дозволить під'єднати редакс до компоненту
 const withProps = connect(mapStateToProps);
 
 // тут вже буде компонент якому в пропси кинули те що mapStateToProps передав
