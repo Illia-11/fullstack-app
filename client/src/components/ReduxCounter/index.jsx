@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import {
   increment,
   decrement,
   setStep,
-} from '../../store/actions/actionCreators';
+} from "../../store/actions/actionCreators";
 
 const ReduxCounter = (props) => {
   const { count, step, dispatch } = props;
@@ -27,12 +27,12 @@ const ReduxCounter = (props) => {
       <button onClick={handleAddStep}>Add step</button>
       <button onClick={handleSubtractStep}>Subtract step</button>
       <label>
-        Step:{' '}
+        Step:{" "}
         <select value={step} onChange={handleChangeStep}>
-          <option value='1'>1</option>
-          <option value='2'>2</option>
-          <option value='5'>5</option>
-          <option value='10'>10</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
         </select>
       </label>
     </div>
@@ -42,7 +42,7 @@ const ReduxCounter = (props) => {
 // функція яка пояснює яку частинку редаксівського стану під'єднуємо до компонента
 const mapStateToProps = (state) => {
   // об'єкт який повертається буде додано до пропсів компонента
-  return state;
+  return state.counter;
 };
 
 // withProps - Компонент вищого порядку, який дозволить під'єднати редакс до компоненту
