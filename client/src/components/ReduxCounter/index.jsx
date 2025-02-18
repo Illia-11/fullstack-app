@@ -1,21 +1,37 @@
 import { connect } from "react-redux";
 
 const ReduxCounter = (props) => {
-  const {count, step, dispatch} = props;
+  const { count, step, dispatch } = props;
   const handleAddStep = () => {
     const incrementAction = {
-      type: "increment"
+      type: "increment",
     };
 
     dispatch(incrementAction);
   };
 
-  const handleChangeStep = ({ target: { value } }) => {};
+  const handleSubtractStep = () => {
+    const substractionAction = {
+      type: "subtraction",
+    };
+
+    dispatch(substractionAction);
+  };
+
+  const handleChangeStep = ({ target: { value } }) => {
+    const setStep = (payload) => ({
+      type: "setStep",
+      payload,
+    });
+
+    dispatch(setStep(value));
+  };
 
   return (
     <div>
       <p>Count: {count}</p>
       <button onClick={handleAddStep}>Add step</button>
+      <button onClick={handleSubtractStep}>Substract step</button>
       <label>
         Step:{" "}
         <select value={step} onChange={handleChangeStep}>
@@ -31,10 +47,9 @@ const ReduxCounter = (props) => {
 
 // функція яка пояснює яку частинку редаксівського стану підʼєднуємо до компонента
 const mapStateToProps = (state) => {
-
   // обʼєкт який повертається буде додано до пропсів компонента
   return state;
-}
+};
 
 // withProps - Компонент вищого порядку, який дозволить підʼєднати редакс до компонента
 const withProps = connect(mapStateToProps);

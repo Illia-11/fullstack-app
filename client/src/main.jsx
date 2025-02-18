@@ -1,35 +1,52 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router";
+// import { BrowserRouter } from "react-router";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import "./index.css";
-import App from "./App.jsx";
+// import App from "./App.jsx";
 import ReduxCounter from "./components/ReduxCounter/index.jsx";
 
 // початковий стан для редюсера
 const initialState = {
   count: 0,
-  step: 1
-}
+  step: 1,
+};
 
 // базовий редаксівський редюсер
 // початковий стан передаємо як значення за замовчанням для state
-function reducer (state = initialState, actino) {
-
+function reducer(state = initialState, action) {
   // по типу екшену визначаємо його логіку
-  switch(actino.type) {
+  switch (action.type) {
     case "increment": {
       // створюємо новий стан та повертаємо як результат редюсера
-      const newState = {
+      const newIncrementState = {
         ...state,
-        count: state.count + state.step
-      }
+        count: state.count + state.step,
+      };
 
-      return newState;
+      return newIncrementState;
+    }
+    case "subtraction": {
+      const newLesionState = {
+        ...state,
+        count: state.count - state.step,
+      };
+
+      return newLesionState;
+    }
+    case "setStep": {
+      const newStep = isNaN(+action.payload) ? state.step : +action.payload;
+      const newStepState = {
+        ...state,
+        step: newStep,
+      };
+
+      return newStepState;
     }
     // якщо тип екшена невідомий або відсутній то повертаємо старий стан
-    default: return state;
+    default:
+      return state;
   }
 }
 
