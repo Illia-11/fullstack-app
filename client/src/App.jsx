@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import AuthLayout from "./Layouts/AuthLayout";
@@ -17,12 +17,40 @@ import CounterPage from "./pages/Counter";
 import PublicOnlyRoute from "./components/Routes/PublicOnlyRoute";
 import { authUserSuccess } from "./store/actions/actionCreators";
 
-function App({user, dispatch}) {
+/*
+  хуки react-redux
+    1. useSelector - аналог mapStateToProps, підписує компонент на частинки стану зі стори
+    2. useDispatch - повертає функції dispatch
+    3. usestore - повертає обʼєкт стори
+*/
+
+function App() {
   // const [user, setUser] = useState(null);
+
+  // useSelector приймає функцію-селектор
+  // ця функція приймає стан зі стори і повертає будь-що
+  // те що повертає селектор повертається результатом useSelector-ф
+  // const user = useSelector((state) => {
+
+  //   return state.user.user;
+  // });
+
+  const { user, isLoading, error } = useSelector((state) => {
+    return state.user;
+  });
+
+  const count = useSelector((state) => {
+    return state.counter.count;
+  });
+
+  console.log(count);
+
+  // хук який повертає функцію dispatch
+  const dispatch = useDispatch();
 
   const setUser = (user) => {
     dispatch(authUserSuccess(user));
-  }
+  };
 
   useEffect(() => {
     const refreshToken = localStorage.getItem(CONSTANTS.REFRESH_TOKEN_KEY);
@@ -62,12 +90,12 @@ function App({user, dispatch}) {
   );
 }
 
-const mStP = (state) => ({
-  ...state.user
-});
+// const mStP = (state) => ({
+//   ...state.user
+// });
 
-const withProps = connect(mStP);
+// const withProps = connect(mStP);
 
-const AppWithProps = withProps(App)
+// const AppWithProps = withProps(App)
 
-export default AppWithProps;
+export default App;
