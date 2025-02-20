@@ -17,6 +17,7 @@ import PrivateRoute from "./components/Routes/PrivateRoute";
 import CounterPage from "./pages/Counter";
 import PublicOnlyRoute from "./components/Routes/PublicOnlyRoute";
 import { authUserSuccess } from "./store/actions/actionCreators";
+import { setTheme, themeReducer } from "./store/reducers/themeReducer";
 
 /*
   хуки react-redux
@@ -35,6 +36,8 @@ function App() {
 
   //   return state.user.user;
   // });
+
+  const theme = useSelector((state) => state.theme)
 
   const { user, isLoading, error } = useSelector((state) => {
     return state.user;
@@ -96,6 +99,9 @@ function App() {
           </Route>
         </Route>
       </Routes>
+
+      <p>Current theme: {theme}</p>
+      <button onClick={() => dispatch(setTheme())}>Change theme</button>
     </UserContext.Provider>
   );
 }
