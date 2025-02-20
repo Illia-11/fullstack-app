@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import AuthLayout from "./Layouts/AuthLayout";
@@ -48,9 +49,18 @@ function App() {
   // хук який повертає функцію dispatch
   const dispatch = useDispatch();
 
-  const setUser = (user) => {
-    dispatch(authUserSuccess(user));
-  };
+  /*
+    Функція приймає обʼєкт з action creatoram-и та dispatch
+    та повертає обʼєкт функція яким закручено dispatch переаних action creator-сів
+  */
+  const { authUserSuccess: setUser } = bindActionCreators(
+    { authUserSuccess },
+    dispatch
+  );
+
+  // const setUser = (user) => {
+  //   // dispatch(authUserSuccess(user));
+  // };
 
   useEffect(() => {
     const refreshToken = localStorage.getItem(CONSTANTS.REFRESH_TOKEN_KEY);
