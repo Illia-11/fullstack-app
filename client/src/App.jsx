@@ -11,12 +11,11 @@ import BasicLayout from "./Layouts/MainLayout";
 import UsersPage from "./pages/Users";
 import { UserContext } from "./contexts";
 import UserProfilePage from "./pages/UserProfile";
-import { refreshSession } from "./api";
 import CONSTANTS from "./constants";
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import CounterPage from "./pages/Counter";
 import PublicOnlyRoute from "./components/Routes/PublicOnlyRoute";
-import { userAuthSuccess } from "./store/slice/userSlice";
+import { refresh } from "./store/slice/userSlice";
 
 /*
   хуки react-redux
@@ -40,9 +39,9 @@ function App() {
     return state.user;
   });
 
-  const count = useSelector((state) => {
-    return state.counter.count;
-  });
+  // const count = useSelector((state) => {
+  //   return state.counter.count;
+  // });
 
   // хук який повертає функцію dispatch
   const dispatch = useDispatch();
@@ -51,10 +50,10 @@ function App() {
     Функція приймає обʼєкт з action creatoram-и та dispatch
     та повертає обʼєкт функція яким закручено dispatch переаних action creator-сів
   */
-  const { userAuthSuccess: setUser } = bindActionCreators(
-    { userAuthSuccess },
-    dispatch
-  );
+  // const { userAuthSuccess: setUser } = bindActionCreators(
+  //   { userAuthSuccess },
+  //   dispatch
+  // );
 
   // const setUser = (user) => {
   //   // dispatch(authUserSuccess(user));
@@ -64,14 +63,12 @@ function App() {
     const refreshToken = localStorage.getItem(CONSTANTS.REFRESH_TOKEN_KEY);
 
     if (refreshToken) {
-      refreshSession(refreshToken).then((userFromServer) => {
-        setUser(userFromServer);
-      });
+      dispatch(refresh(refreshToken));
     }
   }, []);
 
   return (
-    <UserContext.Provider value={[user, setUser]}>
+    <UserContext.Provider value={[user]}>
       <Routes>
         <Route path="/" element={<BasicLayout />}>
           <Route index element={<Home />} />
