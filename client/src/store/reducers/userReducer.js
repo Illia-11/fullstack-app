@@ -1,4 +1,4 @@
-import ACTION_TYPES from "../actions/actionTypes";
+import { authUserSuccess, logout } from "../actions/actionCreators";
 
 const initialState = {
   user: null,
@@ -8,13 +8,13 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
-    case ACTION_TYPES.USER_AUTH_SUCCESS: {
+    case authUserSuccess.type: {
       return {
         ...state,
         user: action.payload,
       };
     }
-    case ACTION_TYPES.USER_LOGOUT: {
+    case logout.type: {
       return {
         ...state,
         user: null,

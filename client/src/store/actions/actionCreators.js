@@ -1,5 +1,4 @@
 import { createAction } from "@reduxjs/toolkit";
-import ACTION_TYPES from "./actionTypes";
 
 // export const increment = () => ({
 //   type: ACTION_TYPES.INCREMENT,
@@ -18,6 +17,9 @@ import ACTION_TYPES from "./actionTypes";
 export const increment = createAction("increment");
 export const decrement = createAction("decrement");
 export const setStep = createAction("setStep");
+export const authUserSuccess = createAction("userAuthSuccess");
+export const logout = createAction("userLogout");
+export const setTheme = createAction("setTheme");
 
 // const act1 = increment();
 // console.log('act1: ');
@@ -31,11 +33,11 @@ export const setStep = createAction("setStep");
 // console.log(increment.type); // increment
 // console.log(increment.toString()); // increment
 
-export const authUserSuccess = (user) => ({
-  type: ACTION_TYPES.USER_AUTH_SUCCESS,
-  payload: user,
-});
+// export const authUserSuccess = (user) => ({
+//   type: ACTION_TYPES.USER_AUTH_SUCCESS,
+//   payload: user,
+// });
 
-export const logout = () => ({
-  type: ACTION_TYPES.USER_LOGOUT,
-});
+// export const logout = () => ({
+//   type: ACTION_TYPES.USER_LOGOUT,
+// });

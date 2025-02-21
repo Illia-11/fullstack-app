@@ -1,19 +1,16 @@
-import ACTION_TYPES from "../actions/actionTypes";
+import { setTheme } from "../actions/actionCreators";
+import CONSTANTS from "../../constants";
 
-const initialState = ACTION_TYPES.LIGHT_THEME;
+const { THEME } = CONSTANTS;
+
+const initialState = THEME.LIGHT_THEME;
 
 export const themeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ACTION_TYPES.SET_THEME: {
-      return state === ACTION_TYPES.LIGHT_THEME
-        ? ACTION_TYPES.DARK_THEME
-        : ACTION_TYPES.LIGHT_THEME;
+    case setTheme.type: {
+      return state === THEME.LIGHT_THEME ? THEME.DARK_THEME : THEME.LIGHT_THEME;
     }
     default:
       return state;
   }
 };
-
-export const setTheme = () => ({
-  type: ACTION_TYPES.SET_THEME,
-});
