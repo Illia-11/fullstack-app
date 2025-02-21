@@ -1,19 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 /*
-  Слайс = шматочок стану редаксу
-  створюється через createSlice. Функція приймає обʼєкт налаштувань
-  в якому вказуються наступні властивості:
+  Слайс - шматочок стану редаксу
+  створюється через createSlice. Функція приймає об'єкт налаштувань
+  в якому вказуються наступні властивості
     initialState - стан слайсу
-    name - стрінга, яка виступаж "префіксом" для екшн тайпів цього слайсу
-    reducers - обʼєкт з мініредюсерами на кожен кейс слайса
+    name - стрінга, яка виступає "префіксом" для екшн тайпів цього слайсу
+    reducers - об'єкт з мініредюсерами на кожен кейс слайса
 
   counter/increment
   balance/increment
   counter/decrement
 */
 
-const SLICE_NAME = "counter";
+const SLICE_NAME = 'counter';
 
 const initialState = {
   count: 0,
@@ -31,7 +31,7 @@ const counterSlice = createSlice({
       state.count -= state.step;
     },
     setStep: (state, action) => {
-      state.step = !isNaN(action.payload) ? +action.payload : state.step;
+      state.step = !isNaN(+action.payload) ? +action.payload : state.step;
     },
     reset: () => {
       return initialState;
@@ -39,7 +39,7 @@ const counterSlice = createSlice({
   },
 });
 
-// reducer - готовий до роботи редюсер, actions - обʼєкт з екшн креаторами
+// reducer - готовий до роботи редюсер, actions - об'єкт з екшн креаторами
 const { reducer: counterReducer, actions } = counterSlice;
 
 export default counterReducer;

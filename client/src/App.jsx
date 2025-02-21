@@ -16,7 +16,7 @@ import CONSTANTS from "./constants";
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import CounterPage from "./pages/Counter";
 import PublicOnlyRoute from "./components/Routes/PublicOnlyRoute";
-import { authUserSuccess } from "./store/actions/actionCreators";
+import { userAuthSuccess } from "./store/slice/userSlice";
 
 /*
   хуки react-redux
@@ -51,8 +51,8 @@ function App() {
     Функція приймає обʼєкт з action creatoram-и та dispatch
     та повертає обʼєкт функція яким закручено dispatch переаних action creator-сів
   */
-  const { authUserSuccess: setUser } = bindActionCreators(
-    { authUserSuccess },
+  const { userAuthSuccess: setUser } = bindActionCreators(
+    { userAuthSuccess },
     dispatch
   );
 

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setTheme } from "../../store/actions/actionCreators";
+import { changeTheme } from "../../store/slice/themeSlice";
 import CONSTANTS from "../../constants";
 
 const { THEME } = CONSTANTS;
@@ -10,7 +10,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const changeThemeHandler = ({target: {value}}) => {
-    dispatch(setTheme(value));
+    dispatch(changeTheme(value));
   }
 
   return (
