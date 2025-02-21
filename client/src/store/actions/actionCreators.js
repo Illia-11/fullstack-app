@@ -20,6 +20,7 @@ export const setStep = createAction("setStep");
 export const authUserSuccess = createAction("userAuthSuccess");
 export const logout = createAction("userLogout");
 export const setTheme = createAction("setTheme");
+export const resetCounter = createAction("resetCounter");
 
 // const act1 = increment();
 // console.log('act1: ');
