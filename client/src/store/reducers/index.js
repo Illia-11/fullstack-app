@@ -1,6 +1,6 @@
 import userReducer from "./userReducer";
 import counterReducer from "./counterReducer";
-import { themeReducer } from "./themeReducer";
+import themeReducer from "./themeReducer";
 
 const rootReducer = {
   user: userReducer,
