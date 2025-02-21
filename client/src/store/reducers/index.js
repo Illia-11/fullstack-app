@@ -1,5 +1,5 @@
 import userReducer from "./userReducer";
-import counterReducer from "./counterReducer";
+import counterReducer from "../slice/counterSlice";
 import themeReducer from "./themeReducer";
 
 const rootReducer = {

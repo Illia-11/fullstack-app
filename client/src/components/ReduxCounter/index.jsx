@@ -3,7 +3,7 @@ import {
   increment,
   decrement,
   setStep,
-} from "../../store/actions/actionCreators";
+} from "../../store/slice/counterSlice";
 
 const ReduxCounter = (props) => {
   console.log(props);
