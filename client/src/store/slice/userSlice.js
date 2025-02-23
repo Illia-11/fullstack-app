@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { refreshSession } from "../../api";
+import { refreshSession, registerUser } from "../../api";
 
 const initialState = {
   user: null,
@@ -22,6 +22,32 @@ const refresh = createAsyncThunk(
       const user = await refreshSession(refreshToken);
 
       // якщо з коллбека щось повернути це сигналізує що можемо запускати екшн на успішне отримання даних
+      return user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.errors);
+    }
+  }
+);
+
+const login = createAsyncThunk(
+  `${SLICE_NAME}/login`,
+  async (userData, thunkAPI) => {
+    try {
+      const user = await login(userData);
+
+      return user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.errors);
+    }
+  }
+);
+
+const registration = createAsyncThunk(
+  `${SLICE_NAME}/registration`,
+  async (userData, thunkAPI) => {
+    try {
+      const user = await registerUser(userData);
+
       return user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.errors);
@@ -60,6 +86,36 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(login.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+      state.error = null;
+    });
+
+    builder.addCase(login.rejected, (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    });
+
+    builder.addCase(registration.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(registration.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+      state.error = null;
+    });
+
+    builder.addCase(registration.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    })
   },
 });
 
@@ -67,4 +123,4 @@ const { reducer: userReducer, actions } = userSlice;
 
 export default userReducer;
 export const { userAuthSuccess, logout } = actions;
-export { refresh };
+export { refresh, login, registration };
