@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { refreshSession, registerUser } from "../../api";
+import { refreshSession, registerUser, login } from "../../api";
 
 const initialState = {
   user: null,
@@ -29,7 +29,7 @@ const refresh = createAsyncThunk(
   }
 );
 
-const login = createAsyncThunk(
+const loginUser = createAsyncThunk(
   `${SLICE_NAME}/login`,
   async (userData, thunkAPI) => {
     try {
@@ -87,17 +87,17 @@ const userSlice = createSlice({
       state.error = action.payload;
     });
 
-    builder.addCase(login.pending, (state) => {
+    builder.addCase(loginUser.pending, (state) => {
       state.isLoading = true;
     });
 
-    builder.addCase(login.fulfilled, (state, action) => {
+    builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
       state.error = null;
     });
 
-    builder.addCase(login.rejected, (state, action) => {
+    builder.addCase(loginUser.rejected, (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     });
@@ -123,4 +123,4 @@ const { reducer: userReducer, actions } = userSlice;
 
 export default userReducer;
 export const { userAuthSuccess, logout } = actions;
-export { refresh, login, registration };
+export { refresh, loginUser, registration };
