@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ RefreshToken }) {
+    static associate({ RefreshToken, Chat, ChatMessage }) {
       // define association here
 
       User.hasMany(RefreshToken, {
@@ -17,6 +17,21 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
+
+      User.belongsToMany(Chat, {
+        as: 'chats',
+        through: 'chats_to_users',
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
+
+      User.hasMany(ChatMessage, {
+        as: 'message',
+        foreignKey: 'userId',
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+      })
     }
   }
   User.init(
