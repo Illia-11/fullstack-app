@@ -1,10 +1,17 @@
-const { Chat } = require("../db/models");
+const { Chat, User } = require("../db/models");
 
 module.exports.createChat = async (req, res, next) => {
   try {
-    const { body } = req;
+    const {
+      body,
+      body: { userId },
+    } = req;
 
-    const chat = await Chat.create(body);
+    const users = await User.findAll({ where: { id: userId } });
+
+    const chat = await user.createChat(body);
+
+    await chat.addUsers(users);
 
     res.status(201).send({ data: chat });
   } catch (error) {
@@ -12,47 +19,39 @@ module.exports.createChat = async (req, res, next) => {
   }
 };
 
-module.exports.getChats = async (req, res, next) => {
+module.exports.addUserToChat = async (req, res, next) => {
   try {
-    const { pagination } = req;
+    const {
+      body: { chatId, userId },
+    } = req;
 
-    const chats = await Chat.findAll({ ...pagination });
+    const chat = await Chat.findByPk(chatId);
+
+    const user = await User.findByPk(userId);
+
+    if (!chat) {
+      throw new Error("Chat is not found");
+    }
+
+    if (!user) {
+      throw new Error("User is not found");
+    }
+
+    res.status(200).send({ message: `${user} added to chat` });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getUserChats = async (req, res, next) => {
+  try {
+    const { params: userId } = req;
+
+    const user = await User.findByPk(userId);
+
+    const chats = await user.getChats();
 
     res.status(200).send({ data: chats });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.getChat = async (req, res, next) => {
-  try {
-    const { chat } = req;
-
-    res.status(200).send({ data: chat });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.deleteChat = async (req, res, next) => {
-  try {
-    const { chat } = req;
-
-    await chat.destroy();
-
-    res.status(200).send({ data: chat });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.updateChat = async (req, res, next) => {
-  try {
-    const { chat, body } = req;
-
-    const updatedChat = await chat.update(body);
-
-    res.status(200).send({ data: updatedChat });
   } catch (error) {
     next(error);
   }
