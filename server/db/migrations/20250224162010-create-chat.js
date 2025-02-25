@@ -13,22 +13,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      // usersId: {
-      //   type: Sequelize.INTEGER,
-      //   field: 'user_id',
-      //   references: {
-      //     model: 'users',
-      //     key: 'id',
-      //   },
-      //   onDelete: "CASCADE",
-      //   onUpdate: "CASCADE"
-      // },
-      messagesId: {
+      usersId: {
         type: Sequelize.INTEGER,
-        field: 'messages_id',
+        field: 'user_id',
         references: {
-          model: 'chat_messages',
-          key: 'id'
+          model: 'users',
+          key: 'id',
         },
         onDelete: "CASCADE",
         onUpdate: "CASCADE"

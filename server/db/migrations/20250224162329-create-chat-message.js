@@ -20,17 +20,17 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "CASCADE"
       },
-      // chatId: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false,
-      //   field: 'chat_id',
-      //   references: {
-      //     model: 'chats',
-      //     key: 'id',
-      //   },
-      //   onDelete: "CASCADE",
-      //   onUpdate: "CASCADE"
-      // },
+      chatId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        field: 'chat_id',
+        references: {
+          model: 'chats',
+          key: 'id',
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+      },
       body: {
         type: Sequelize.TEXT,
         allowNull: false,
