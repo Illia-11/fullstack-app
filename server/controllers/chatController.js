@@ -7,11 +7,11 @@ module.exports.createChat = async (req, res, next) => {
       body: { userId },
     } = req;
 
-    const users = await User.findAll({ where: { id: userId } });
+    const user = await User.findAll({ where: { id: userId } });
 
     const chat = await user.createChat(body);
 
-    await chat.addUsers(users);
+    await chat.addUsers(user);
 
     res.status(201).send({ data: chat });
   } catch (error) {
