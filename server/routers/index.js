@@ -7,6 +7,7 @@ const chatMessageRouter = require("./chatMessageRouter");
 
 rootRouter.use("/users", userRouter);
 rootRouter.use("/auth", authRouter);
+rootRouter.use("/users", chatRouter);
 
 rootRouter.use("/chats", chatRouter);
 rootRouter.use("/messages", chatMessageRouter);

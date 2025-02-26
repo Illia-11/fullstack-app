@@ -38,7 +38,7 @@ module.exports.getChatMessages = async (req, res, next) => {
       throw new Error("Chat is not found");
     }
 
-    const messages = await chat.getChatMessages();
+    const messages = await chat.getChat_messages();
 
     res.status(200).send({ data: messages });
   } catch (error) {

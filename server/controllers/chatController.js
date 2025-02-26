@@ -7,11 +7,15 @@ module.exports.createChat = async (req, res, next) => {
       body: { userId },
     } = req;
 
-    const user = await User.findAll({ where: { id: userId } });
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      throw new Error("User is not found");
+    }
 
     const chat = await user.createChat(body);
 
-    await chat.addUsers(user);
+    await chat.addUser(user);
 
     res.status(201).send({ data: chat });
   } catch (error) {
@@ -37,7 +41,7 @@ module.exports.addUserToChat = async (req, res, next) => {
       throw new Error("User is not found");
     }
 
-    res.status(200).send({ message: `${user} added to chat` });
+    res.status(200).send({ message: "user added to chat" });
   } catch (error) {
     next(error);
   }
@@ -45,9 +49,13 @@ module.exports.addUserToChat = async (req, res, next) => {
 
 module.exports.getUserChats = async (req, res, next) => {
   try {
-    const { params: userId } = req;
+    const { body: userId } = req;
 
-    const user = await User.findByPk(userId);
+    const user = await User.findAll({
+      where: {
+        id: userId,
+      },
+    });
 
     const chats = await user.getChats();
 
