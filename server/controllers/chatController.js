@@ -49,13 +49,13 @@ module.exports.addUserToChat = async (req, res, next) => {
 
 module.exports.getUserChats = async (req, res, next) => {
   try {
-    const { body: userId } = req;
+    const userId = Number(req.body.id);
 
-    const user = await User.findAll({
-      where: {
-        id: userId,
-      },
-    });
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      throw new Error("User is not found");
+    }
 
     const chats = await user.getChats();
 
