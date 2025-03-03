@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { Route, Routes } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import AuthLayout from "./Layouts/AuthLayout";
@@ -16,6 +15,7 @@ import PrivateRoute from "./components/Routes/PrivateRoute";
 import CounterPage from "./pages/Counter";
 import PublicOnlyRoute from "./components/Routes/PublicOnlyRoute";
 import { refresh } from "./store/slice/userSlice";
+import ChatPage from "./pages/Chats";
 
 /*
   хуки react-redux
@@ -74,6 +74,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/counter" element={<CounterPage />} />
+          <Route path="/chats/*" element={<ChatPage />} />
 
           {/* <Route element={<PrivateRoute roles={["admin"]}/>}> */}
           <Route element={<PrivateRoute />}>
